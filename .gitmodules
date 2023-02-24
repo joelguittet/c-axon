@@ -1,6 +1,3 @@
-[submodule "amp"]
+[submodule "lib/c-amp"]
 	path = lib/amp
-	url = https://github.com/joelguittet/c-amp
-[submodule "lib/cJSON"]
-	path = lib/cJSON
-	url = https://github.com/DaveGamble/cJSON.git
+	url = https://github.com/joelguittet/c-amp.git

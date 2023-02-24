@@ -1,6 +1,6 @@
 # c-axon
 
-[![CMake Badge](https://github.com/joelguittet/c-axon/workflows/CMake%20+%20SonarCloud%20Analysis/badge.svg)](https://github.com/joelguittet/c-axon/actions)
+[![CI Badge](https://github.com/joelguittet/c-axon/workflows/ci/badge.svg)](https://github.com/joelguittet/c-axon/actions)
 [![Issues Badge](https://img.shields.io/github/issues/joelguittet/c-axon)](https://github.com/joelguittet/c-axon/issues)
 [![License Badge](https://img.shields.io/github/license/joelguittet/c-axon)](https://github.com/joelguittet/c-axon/blob/master/LICENSE)
 
@@ -36,8 +36,19 @@ This repository is not a fork of [axon](https://github.com/tj/axon) ! It has the
 Build `libaxon.so` with the following commands:
 
 ``` bash
-cmake .
+mkdir build
+cd build
+cmake ..
 make
+```
+
+
+## Installing
+
+Install `libamp.so` with the following commands:
+
+``` bash
+make install
 ```
 
 ## Protocol
@@ -52,11 +63,11 @@ This library is compatible with [axon](https://github.com/tj/axon) release 2.0.3
 
 ## Examples
 
-Several examples are available in the `examples\` directory.
-
 Build examples with the following commands:
 ``` bash
-cmake -DENABLE_AXON_EXAMPLES=ON .
+mkdir build
+cd build
+cmake -DENABLE_AXON_EXAMPLES=ON ..
 make
 ```
 

@@ -1,15 +1,35 @@
 /**
- * @file axon.h
- * @brief Axon library
+ * @file      axon.h
+ * @brief     Axon library
+ *
+ * MIT License
+ *
+ * Copyright (c) 2021-2023 joelguittet and c-axon contributors
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
-
 
 #ifndef __AXON_H__
 #define __AXON_H__
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 #if !defined(__WINDOWS__) && (defined(WIN32) || defined(WIN64) || defined(_MSC_VER) || defined(_WIN32))
@@ -36,7 +56,7 @@ then using the AXON_API_VISIBILITY flag to "export" the same symbols the way AXO
 
 */
 
-#define AXON_CDECL __cdecl
+#define AXON_CDECL   __cdecl
 #define AXON_STDCALL __stdcall
 
 /* export symbols by default, this is necessary for copy pasting the C and header file */
@@ -45,23 +65,22 @@ then using the AXON_API_VISIBILITY flag to "export" the same symbols the way AXO
 #endif
 
 #if defined(AXON_HIDE_SYMBOLS)
-#define AXON_PUBLIC(type)   type AXON_STDCALL
+#define AXON_PUBLIC(type) type AXON_STDCALL
 #elif defined(AXON_EXPORT_SYMBOLS)
-#define AXON_PUBLIC(type)   __declspec(dllexport) type AXON_STDCALL
+#define AXON_PUBLIC(type) __declspec(dllexport) type AXON_STDCALL
 #elif defined(AXON_IMPORT_SYMBOLS)
-#define AXON_PUBLIC(type)   __declspec(dllimport) type AXON_STDCALL
+#define AXON_PUBLIC(type) __declspec(dllimport) type AXON_STDCALL
 #endif
 #else /* !__WINDOWS__ */
 #define AXON_CDECL
 #define AXON_STDCALL
 
-#if (defined(__GNUC__) || defined(__SUNPRO_CC) || defined (__SUNPRO_C)) && defined(AXON_API_VISIBILITY)
-#define AXON_PUBLIC(type)   __attribute__((visibility("default"))) type
+#if (defined(__GNUC__) || defined(__SUNPRO_CC) || defined(__SUNPRO_C)) && defined(AXON_API_VISIBILITY)
+#define AXON_PUBLIC(type) __attribute__((visibility("default"))) type
 #else
 #define AXON_PUBLIC(type) type
 #endif
 #endif
-
 
 /******************************************************************************/
 /* Includes                                                                   */
@@ -73,56 +92,54 @@ then using the AXON_API_VISIBILITY flag to "export" the same symbols the way AXO
 
 #include "amp.h"
 
-
 /******************************************************************************/
 /* Definitions                                                                */
 /******************************************************************************/
 
 /* Axon type */
 typedef enum {
-  AXON_TYPE_PUB,                                                    /* Publisher (server which is broadcasting data to all its clients OR a client which is broadcasting data to all its servers) */
-  AXON_TYPE_SUB,                                                    /* Subscriber (client receiving broadcasted data from the Publisher server OR server receiving broadcasted data from the Publisher client) */
-  AXON_TYPE_PUSH,                                                   /* Pusher (server which is sending data to its clients OR a client which is sending data to its servers - both with Round-Robin mechanism and queing) */
-  AXON_TYPE_PULL,                                                   /* Puller (client receiving data data from the Pusher server OR server receiving data from the Pusher client) */
-  AXON_TYPE_REQ,                                                    /* Requester (client sending requests and receiving responses from the Replier server OR server sending requests and receiving responses from the Replier client - both with Round-Robin mechanism and queing) */
-  AXON_TYPE_REP                                                     /* Replier (server waiting for message from clients and replying to the client OR client waiting for message from servers and replying to the server) */
+    AXON_TYPE_PUB, /* Publisher (server which is broadcasting data to all its clients OR a client which is broadcasting data to all its servers) */
+    AXON_TYPE_SUB, /* Subscriber (client receiving broadcasted data from the Publisher server OR server receiving broadcasted data from the Publisher client) */
+    AXON_TYPE_PUSH, /* Pusher (server which is sending data to its clients OR a client which is sending data to its servers - both with Round-Robin mechanism and queing) */
+    AXON_TYPE_PULL, /* Puller (client receiving data data from the Pusher server OR server receiving data from the Pusher client) */
+    AXON_TYPE_REQ, /* Requester (client sending requests and receiving responses from the Replier server OR server sending requests and receiving responses from the Replier client - both with Round-Robin mechanism and queing) */
+    AXON_TYPE_REP /* Replier (server waiting for message from clients and replying to the client OR client waiting for message from servers and replying to the server) */
 } axon_enum_e;
 
 /* Axon topic subscription */
 struct axon_s;
 typedef struct axon_sub_s {
-  struct axon_sub_s *next;                                          /* Next subscription */
-  char *topic;                                                      /* Topic of the subscription */
-  amp_msg_t *(*fct)(struct axon_s *, char *, amp_msg_t *, void *);  /* Callback function invoked when topic is received */
-  void *user;                                                       /* User data passed to the callback */
+    struct axon_sub_s *next;                                         /* Next subscription */
+    char *             topic;                                        /* Topic of the subscription */
+    amp_msg_t *(*fct)(struct axon_s *, char *, amp_msg_t *, void *); /* Callback function invoked when topic is received */
+    void *user;                                                      /* User data passed to the callback */
 } axon_sub_t;
 
 /* Axon instance */
 typedef struct sock_s sock_t;
 typedef struct axon_s {
-  axon_enum_e type;                                                 /* Axon instance type */
-  sock_t *sock;                                                     /* Sock instance */
-  unsigned int msg_id;                                              /* Requester message ID used to retrieve response */
-  struct {
-    axon_sub_t *first;                                              /* Topic subscription daisy chain */
-    sem_t sem;                                                      /* Semaphore used to protect daisy chain */
-  } subs;
-  struct {
+    axon_enum_e  type;   /* Axon instance type */
+    sock_t *     sock;   /* Sock instance */
+    unsigned int msg_id; /* Requester message ID used to retrieve response */
     struct {
-      void *(*fct)(struct axon_s *, uint16_t, void *);              /* Callback function invoked when socket is bound */
-      void *user;                                                   /* User data passed to the callback */
-    } bind;
+        axon_sub_t *first; /* Topic subscription daisy chain */
+        sem_t       sem;   /* Semaphore used to protect daisy chain */
+    } subs;
     struct {
-      amp_msg_t *(*fct)(struct axon_s *, amp_msg_t *, void *);      /* Callback function invoked when message is received */
-      void *user;                                                   /* User data passed to the callback */
-    } message;
-    struct {
-      void *(*fct)(struct axon_s *, char *, void *);                /* Callback function invoked when an error occurs */
-      void *user;                                                   /* User data passed to the callback */
-    } error;
-  } cb;
+        struct {
+            void *(*fct)(struct axon_s *, uint16_t, void *); /* Callback function invoked when socket is bound */
+            void *user;                                      /* User data passed to the callback */
+        } bind;
+        struct {
+            amp_msg_t *(*fct)(struct axon_s *, amp_msg_t *, void *); /* Callback function invoked when message is received */
+            void *user;                                              /* User data passed to the callback */
+        } message;
+        struct {
+            void *(*fct)(struct axon_s *, char *, void *); /* Callback function invoked when an error occurs */
+            void *user;                                    /* User data passed to the callback */
+        } error;
+    } cb;
 } axon_t;
-
 
 /******************************************************************************/
 /* Prototypes                                                                 */
@@ -225,7 +242,6 @@ AXON_PUBLIC(amp_msg_t *) axon_reply(axon_t *axon, int count, ...);
  * @param axon Axon instance
  */
 AXON_PUBLIC(void) axon_release(axon_t *axon);
-
 
 #ifdef __cplusplus
 }
