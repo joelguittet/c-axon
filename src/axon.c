@@ -4,7 +4,7 @@
  *
  * MIT License
  *
- * Copyright (c) 2021-2023 joelguittet and c-axon contributors
+ * Copyright joelguittet and c-axon contributors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -367,12 +367,12 @@ axon_send(axon_t *axon, int count, amp_type_e type1, void *value1, ...) {
 int
 axon_vsend(axon_t *axon, int count, amp_type_e type1, void *value1, va_list params) {
 
-    void *      blob   = NULL;
+    void       *blob   = NULL;
     size_t      size   = 0;
-    char *      str    = NULL;
+    char       *str    = NULL;
     int64_t     bint   = 0;
-    cJSON *     json   = NULL;
-    void *      buffer = NULL;
+    cJSON      *json   = NULL;
+    void       *buffer = NULL;
     char        str_id[32 + 1];
     amp_msg_t **resp    = NULL;
     int         timeout = 0;
@@ -523,11 +523,11 @@ axon_vsend(axon_t *axon, int count, amp_type_e type1, void *value1, va_list para
 amp_msg_t *
 axon_reply(axon_t *axon, int count, ...) {
 
-    void *  blob = NULL;
+    void   *blob = NULL;
     size_t  size = 0;
-    char *  str  = NULL;
+    char   *str  = NULL;
     int64_t bint = 0;
-    cJSON * json = NULL;
+    cJSON  *json = NULL;
 
     assert(NULL != axon);
 
@@ -725,7 +725,7 @@ axon_message_cb(sock_t *sock, void *buffer, size_t size, int socket, void *user)
                     amp_push(rep, id_field->type, id_field->data, id_field->size);
 
                     /* Encode AMP message */
-                    void * buffer_rep = NULL;
+                    void  *buffer_rep = NULL;
                     size_t size_rep   = 0;
                     if (0 != amp_encode(rep, &buffer_rep, &size_rep)) {
                         /* Unable to encode message */

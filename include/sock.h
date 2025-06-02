@@ -4,7 +4,7 @@
  *
  * MIT License
  *
- * Copyright (c) 2021-2023 joelguittet and c-axon contributors
+ * Copyright joelguittet and c-axon contributors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -50,7 +50,7 @@ extern "C" {
 /* Sock worker structure */
 struct sock_s;
 typedef struct sock_worker_s {
-    struct sock_s *       parent; /* Parent sock instance */
+    struct sock_s        *parent; /* Parent sock instance */
     struct sock_worker_s *prev;   /* Previous worker instance */
     struct sock_worker_s *next;   /* Next worker instance */
     pthread_t             thread; /* Thread handle of the worker */
@@ -62,18 +62,18 @@ typedef struct sock_worker_s {
         } listenner;
         struct {
             int      socket;   /* Reader socket */
-            char *   hostname; /* Reader hostname */
+            char    *hostname; /* Reader hostname */
             uint16_t port;     /* Reader port */
             fd_set   fds;      /* Reader FDs (myself) */
         } reader;
         struct {
             int    socket; /* Messenger socket */
-            void * buffer; /* Messenger buffer */
+            void  *buffer; /* Messenger buffer */
             size_t size;   /* Messenger buffer size */
         } messenger;
         struct {
             int    socket; /* Sender socket, can be SOCK_SEND_BROADCAST or SOCK_SEND_ROUND_ROBIN */
-            void * buffer; /* Sender buffer */
+            void  *buffer; /* Sender buffer */
             size_t size;   /* Sender buffer size */
         } sender;
     } type;

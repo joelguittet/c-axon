@@ -4,7 +4,7 @@
  *
  * MIT License
  *
- * Copyright (c) 2021-2023 joelguittet and c-axon contributors
+ * Copyright joelguittet and c-axon contributors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -400,7 +400,7 @@ sock_thread_listenner(void *arg) {
 
     /* Retrieve worker */
     sock_worker_t *worker = (sock_worker_t *)arg;
-    sock_t *       sock   = worker->parent;
+    sock_t        *sock   = worker->parent;
 
     /* Create new SOCK_STREAM socket */
     worker->type.listenner.socket = socket(AF_INET, SOCK_STREAM, 0);
@@ -569,7 +569,7 @@ sock_thread_reader(void *arg) {
 
     /* Retrieve worker */
     sock_worker_t *worker = (sock_worker_t *)arg;
-    sock_t *       sock   = worker->parent;
+    sock_t        *sock   = worker->parent;
 
     int  retry     = 100;   /* Connection retry timeout */
     bool connected = false; /* Connection status */
@@ -703,7 +703,7 @@ sock_thread_messenger(void *arg) {
 
     /* Retrieve worker */
     sock_worker_t *worker = (sock_worker_t *)arg;
-    sock_t *       sock   = worker->parent;
+    sock_t        *sock   = worker->parent;
 
     /* Check if message callback is define */
     if (NULL != sock->cb.message.fct) {
@@ -734,7 +734,7 @@ sock_thread_sender(void *arg) {
 
     /* Retrieve worker */
     sock_worker_t *worker = (sock_worker_t *)arg;
-    sock_t *       sock   = worker->parent;
+    sock_t        *sock   = worker->parent;
 
     /* Check wanted destination */
     if (SOCK_SEND_ROUND_ROBIN == worker->type.sender.socket) {
