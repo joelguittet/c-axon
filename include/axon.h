@@ -4,7 +4,7 @@
  *
  * MIT License
  *
- * Copyright (c) 2021-2023 joelguittet and c-axon contributors
+ * Copyright joelguittet and c-axon contributors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -110,7 +110,7 @@ typedef enum {
 struct axon_s;
 typedef struct axon_sub_s {
     struct axon_sub_s *next;                                         /* Next subscription */
-    char *             topic;                                        /* Topic of the subscription */
+    char              *topic;                                        /* Topic of the subscription */
     amp_msg_t *(*fct)(struct axon_s *, char *, amp_msg_t *, void *); /* Callback function invoked when topic is received */
     void *user;                                                      /* User data passed to the callback */
 } axon_sub_t;
@@ -119,7 +119,7 @@ typedef struct axon_sub_s {
 typedef struct sock_s sock_t;
 typedef struct axon_s {
     axon_enum_e  type;   /* Axon instance type */
-    sock_t *     sock;   /* Sock instance */
+    sock_t      *sock;   /* Sock instance */
     unsigned int msg_id; /* Requester message ID used to retrieve response */
     struct {
         axon_sub_t *first; /* Topic subscription daisy chain */
