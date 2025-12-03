@@ -1,6 +1,7 @@
 # c-axon
 
-[![CI Badge](https://github.com/joelguittet/c-axon/workflows/ci/badge.svg)](https://github.com/joelguittet/c-axon/actions)
+[![Workflow check-code-format Badge](https://github.com/joelguittet/c-axon/workflows/check-code-format/badge.svg)](https://github.com/joelguittet/c-axon/actions)
+[![Workflow build Badge](https://github.com/joelguittet/c-axon/workflows/build/badge.svg)](https://github.com/joelguittet/c-axon/actions)
 [![Issues Badge](https://img.shields.io/github/issues/joelguittet/c-axon)](https://github.com/joelguittet/c-axon/issues)
 [![License Badge](https://img.shields.io/github/license/joelguittet/c-axon)](https://github.com/joelguittet/c-axon/blob/master/LICENSE)
 
